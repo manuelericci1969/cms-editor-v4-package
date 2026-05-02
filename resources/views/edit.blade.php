@@ -78,7 +78,7 @@
             <div class="r4v4-brand">
                 <span class="r4v4-logo">R4</span>
                 <div>
-                    <div class="r4v4-title">Editor V4 · v0.1.3</div>
+                    <div class="r4v4-title">Editor V4 · v0.1.6</div>
                     <div class="r4v4-subtitle">{{ $page->title }}</div>
                 </div>
             </div>
