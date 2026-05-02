@@ -26,6 +26,8 @@
         ['r4ColumnShadow', 'Ombra colonna', 'text']
     ];
 
+    let userCollapsed = false;
+
     function editor() {
         return window.r4VisualEditorV4Instance || null;
     }
@@ -63,14 +65,27 @@
         const target = panelTarget();
         if (!target) return false;
 
+        const sidebar = document.querySelector('.r4v4-sidebar-left');
+        if (sidebar) {
+            sidebar.style.overflowY = 'auto';
+            sidebar.style.overflowX = 'hidden';
+        }
+
         const panel = document.createElement('div');
         panel.id = 'r4v4SectionGridPanel';
         panel.className = 'r4v4-section-grid-panel';
         panel.hidden = true;
         panel.innerHTML = '' +
             '<style>' +
-                '.r4v4-section-grid-panel{margin:10px 0 14px;padding:14px;border:1px solid rgba(148,163,184,.24);border-radius:18px;background:linear-gradient(180deg,#111827,#0b1220);color:#e5e7eb;box-shadow:0 16px 36px rgba(0,0,0,.22);overflow:hidden}' +
-                '.r4v4-section-grid-panel__title{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;color:#fff}' +
+                '.r4v4-section-grid-panel{margin:10px 0 14px;padding:14px;border:1px solid rgba(148,163,184,.24);border-radius:18px;background:linear-gradient(180deg,#111827,#0b1220);color:#e5e7eb;box-shadow:0 16px 36px rgba(0,0,0,.22);max-height:calc(100vh - 190px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#475569 #020617}' +
+                '.r4v4-section-grid-panel::-webkit-scrollbar{width:8px}' +
+                '.r4v4-section-grid-panel::-webkit-scrollbar-track{background:#020617;border-radius:999px}' +
+                '.r4v4-section-grid-panel::-webkit-scrollbar-thumb{background:#475569;border-radius:999px}' +
+                '.r4v4-section-grid-panel.is-collapsed{max-height:none;overflow:hidden;padding:10px 12px}' +
+                '.r4v4-section-grid-panel.is-collapsed .r4v4-section-grid-panel__hint,.r4v4-section-grid-panel.is-collapsed .r4v4-section-grid-panel__grid,.r4v4-section-grid-panel.is-collapsed .r4v4-section-grid-panel__actions{display:none}' +
+                '.r4v4-section-grid-panel__head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}' +
+                '.r4v4-section-grid-panel__title{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#fff}' +
+                '.r4v4-section-grid-panel__toggle{width:28px;height:28px;border:1px solid rgba(148,163,184,.28);border-radius:9px;background:#020617;color:#e5e7eb;font-size:16px;font-weight:900;line-height:1;cursor:pointer}' +
                 '.r4v4-section-grid-panel__hint{font-size:11px;line-height:1.45;color:#94a3b8;margin:0 0 12px}' +
                 '.r4v4-section-grid-panel__grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;align-items:start}' +
                 '.r4v4-section-grid-panel__field{display:flex;flex-direction:column;gap:4px;font-size:10px;font-weight:800;color:#cbd5e1;align-items:flex-start;min-width:0}' +
@@ -80,12 +95,15 @@
                 '.r4v4-section-grid-panel__field input[type="text"]{width:100%;max-width:100%}' +
                 '.r4v4-section-grid-panel__field--wide{grid-column:1/-1;width:100%}' +
                 '.r4v4-section-grid-panel__field--wide input{width:100%;max-width:100%}' +
-                '.r4v4-section-grid-panel__actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}' +
+                '.r4v4-section-grid-panel__actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;position:sticky;bottom:-14px;padding-top:10px;padding-bottom:2px;background:linear-gradient(180deg,rgba(11,18,32,0),#0b1220 32%)}' +
                 '.r4v4-section-grid-panel__btn{border:0;border-radius:10px;padding:9px 10px;background:#2563eb;color:#fff;font-size:11px;font-weight:900;cursor:pointer}' +
                 '.r4v4-section-grid-panel__btn.secondary{background:#334155}' +
                 '.r4v4-section-grid-panel__empty{font-size:11px;line-height:1.5;color:#94a3b8;margin:0}' +
             '</style>' +
-            '<div class="r4v4-section-grid-panel__title" data-r4-section-grid-title>Sezione avanzata</div>' +
+            '<div class="r4v4-section-grid-panel__head">' +
+                '<div class="r4v4-section-grid-panel__title" data-r4-section-grid-title>Sezione avanzata</div>' +
+                '<button type="button" class="r4v4-section-grid-panel__toggle" data-r4-section-grid-toggle title="Apri/chiudi pannello">×</button>' +
+            '</div>' +
             '<p class="r4v4-section-grid-panel__hint" data-r4-section-grid-hint>Seleziona una sezione avanzata o una colonna per modificare layout e stile.</p>' +
             '<div class="r4v4-section-grid-panel__grid" data-r4-section-grid-fields></div>' +
             '<div class="r4v4-section-grid-panel__actions">' +
@@ -130,10 +148,13 @@
 
         if (!kind) {
             panel.hidden = true;
+            userCollapsed = false;
+            panel.classList.remove('is-collapsed');
             return;
         }
 
         panel.hidden = false;
+        panel.classList.toggle('is-collapsed', userCollapsed);
         panel.dataset.kind = kind;
         panel.dataset.cid = component.cid || '';
 
@@ -141,11 +162,13 @@
         const hint = panel.querySelector('[data-r4-section-grid-hint]');
         const addBtn = panel.querySelector('[data-r4-section-grid-add-column]');
         const parentBtn = panel.querySelector('[data-r4-section-grid-select-parent]');
+        const toggle = panel.querySelector('[data-r4-section-grid-toggle]');
 
         if (title) title.textContent = kind === 'section' ? 'Sezione avanzata' : 'Colonna avanzata';
         if (hint) hint.textContent = kind === 'section'
             ? 'Gestisci colonne, spaziature, sfondo e responsive della sezione selezionata.'
             : 'Gestisci sfondo, padding, bordo, radius e ombra della colonna selezionata.';
+        if (toggle) toggle.textContent = userCollapsed ? '+' : '×';
         if (addBtn) addBtn.style.display = kind === 'section' ? '' : 'none';
         if (parentBtn) parentBtn.style.display = kind === 'column' ? '' : 'none';
 
@@ -157,6 +180,11 @@
     }
 
     function bindPanel(panel) {
+        panel.querySelector('[data-r4-section-grid-toggle]')?.addEventListener('click', function () {
+            userCollapsed = !userCollapsed;
+            syncPanel();
+        });
+
         panel.addEventListener('input', function (event) {
             const field = event.target.closest('[data-r4-section-grid-prop]');
             if (!field) return;
@@ -201,7 +229,7 @@
         if (!instance) return false;
         if (instance.__r4SectionGridPanelBooted) return true;
         instance.__r4SectionGridPanelBooted = true;
-        instance.on('component:selected', syncPanel);
+        instance.on('component:selected', function () { userCollapsed = false; syncPanel(); });
         instance.on('component:deselected', syncPanel);
         instance.on('component:update', syncPanel);
         instance.on('load', syncPanel);
