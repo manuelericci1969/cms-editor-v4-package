@@ -28,8 +28,30 @@
         });
     }
 
+    function isTextEditing(editor) {
+        if (!editor || !editor.Canvas) return false;
+
+        const doc = editor.Canvas.getDocument && editor.Canvas.getDocument();
+        if (!doc || !doc.activeElement) return false;
+
+        const active = doc.activeElement;
+
+        return !!(
+            active &&
+            (
+                active.isContentEditable ||
+                active.closest?.('[contenteditable="true"]') ||
+                active.closest?.('.gjs-selected[contenteditable="true"]')
+            )
+        );
+    }
+
     function injectRuntime(editor) {
         if (!editor || !editor.Canvas) return false;
+
+        if (isTextEditing(editor)) {
+            return false;
+        }
 
         const doc = editor.Canvas.getDocument && editor.Canvas.getDocument();
         const body = editor.Canvas.getBody && editor.Canvas.getBody();
@@ -90,7 +112,7 @@
         injectRuntime(editor);
         editor.on('load', function () { injectRuntime(editor); });
         editor.on('component:add', function () { window.setTimeout(function () { injectRuntime(editor); }, 50); });
-        editor.on('component:update', function () { window.setTimeout(function () { injectRuntime(editor); }, 50); });
+        // Evitare injectRuntime su component:update: durante l'editing testo può resettare il caret/cursore.
         editor.on('component:selected', function () { window.setTimeout(function () { injectRuntime(editor); }, 50); });
 
         return true;
