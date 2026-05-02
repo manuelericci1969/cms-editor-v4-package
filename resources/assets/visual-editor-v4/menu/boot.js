@@ -6,6 +6,8 @@
     const ELEMENT_CATEGORIES = ['layout', 'base', 'media'];
     const WIDGET_CATEGORIES = ['marketing', 'interattivi', 'crewlive', 'pro', 'widget'];
 
+    let editorPanelCollapsed = false;
+
     function byId(id) {
         return id ? document.getElementById(id) : null;
     }
@@ -32,6 +34,70 @@
         return 'widgets';
     }
 
+    function refreshEditorCanvas() {
+        const editor = window.r4VisualEditorV4Instance;
+        if (editor && typeof editor.refresh === 'function') {
+            window.setTimeout(function () { editor.refresh(); }, 120);
+        }
+    }
+
+    function injectEditorPanelCss() {
+        if (document.getElementById('r4v4EditorPanelCollapseCss')) return;
+        const style = document.createElement('style');
+        style.id = 'r4v4EditorPanelCollapseCss';
+        style.textContent = '' +
+            '.r4v4-panel.r4v4-blocks-panel{position:relative;overflow:hidden}' +
+            '.r4v4-panel.r4v4-blocks-panel .r4v4-panel-title{display:flex;align-items:center;justify-content:space-between;gap:8px}' +
+            '.r4v4-editor-panel-toggle{width:30px;height:30px;border:1px solid rgba(148,163,184,.28);border-radius:10px;background:#020617;color:#e5e7eb;font-size:17px;font-weight:900;line-height:1;cursor:pointer}' +
+            '.r4v4-editor-panel-toggle:hover{background:#111827;color:#fff}' +
+            '.r4v4-blocks-panel.is-editor-collapsed .r4v4-left-tabs,' +
+            '.r4v4-blocks-panel.is-editor-collapsed .r4v4-left-tab-panel,' +
+            '.r4v4-blocks-panel.is-editor-collapsed .r4v4-left-tab-source{display:none!important}' +
+            '.r4v4-blocks-panel.is-editor-collapsed{min-height:0!important}' +
+            '.r4v4-blocks-panel.is-editor-collapsed .r4v4-panel-title{margin-bottom:0!important}' +
+            '.r4v4-blocks-panel.is-editor-collapsed::after{content:"Pannello compresso: clicca + per riaprire gli strumenti.";display:block;margin:10px 0 2px;color:#94a3b8;font-size:11px;line-height:1.45}' +
+            '.r4v4-sidebar-left{overflow-y:auto;overflow-x:hidden}';
+        document.head.appendChild(style);
+    }
+
+    function updateEditorPanelToggle(blocksPanel) {
+        if (!blocksPanel) return;
+        const button = blocksPanel.querySelector('[data-r4v4-editor-panel-toggle]');
+        blocksPanel.classList.toggle('is-editor-collapsed', editorPanelCollapsed);
+        if (button) {
+            button.textContent = editorPanelCollapsed ? '+' : '−';
+            button.title = editorPanelCollapsed ? 'Riapri il pannello Editor' : 'Comprimi il pannello Editor';
+        }
+        refreshEditorCanvas();
+    }
+
+    function bindEditorPanelToggle(blocksPanel) {
+        if (!blocksPanel || blocksPanel.dataset.r4v4EditorCollapseBound === '1') return;
+        blocksPanel.dataset.r4v4EditorCollapseBound = '1';
+        injectEditorPanelCss();
+
+        const title = blocksPanel.querySelector('.r4v4-panel-title');
+        if (!title) return;
+
+        let button = title.querySelector('[data-r4v4-editor-panel-toggle]');
+        if (!button) {
+            button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'r4v4-editor-panel-toggle';
+            button.setAttribute('data-r4v4-editor-panel-toggle', '1');
+            title.appendChild(button);
+        }
+
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            editorPanelCollapsed = !editorPanelCollapsed;
+            updateEditorPanelToggle(blocksPanel);
+        });
+
+        updateEditorPanelToggle(blocksPanel);
+    }
+
     function activateTab(sidebar, tabName) {
         sidebar.querySelectorAll('[data-r4v4-sidebar-tab]').forEach((button) => {
             button.classList.toggle('is-active', button.dataset.r4v4SidebarTab === tabName);
@@ -46,6 +112,8 @@
                 if (module && typeof module.onActivate === 'function') module.onActivate(panel);
             }
         });
+
+        updateEditorPanelToggle(sidebar);
     }
 
     function bindSelectionState(blocksPanel) {
@@ -98,12 +166,17 @@
     }
 
     function buildTabs(blocksPanel, blocksSource) {
-        if (blocksPanel.dataset.r4v4SidebarTabs === '1') return;
+        if (blocksPanel.dataset.r4v4SidebarTabs === '1') {
+            bindEditorPanelToggle(blocksPanel);
+            return;
+        }
         blocksPanel.dataset.r4v4SidebarTabs = '1';
         blocksPanel.classList.add('r4v4-blocks-panel');
 
         const title = blocksPanel.querySelector('.r4v4-panel-title');
         if (title) title.textContent = 'Editor';
+
+        bindEditorPanelToggle(blocksPanel);
 
         const modules = window.R4V4SidebarMenu.all();
         const tabbar = document.createElement('div');
@@ -155,6 +228,7 @@
         distribute();
         activateTab(blocksPanel, 'elements');
         bindSelectionState(blocksPanel);
+        updateEditorPanelToggle(blocksPanel);
     }
 
     function initSidebarTabs() {

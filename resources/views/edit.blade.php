@@ -219,7 +219,9 @@
         pageSettings: @json($pageSettingsV4)
     };
 </script>
+<script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/section-grid.js') }}"></script>
 <script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/app.js') }}"></script>
+<script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/section-grid-panel.js') }}"></script>
 <script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/menu/registry.js') }}"></script>
 <script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/menu/helpers.js') }}"></script>
 <script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/menu/page-settings.js') }}"></script>
