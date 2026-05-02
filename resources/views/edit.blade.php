@@ -234,5 +234,6 @@
     <script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/focus-mode.js') }}"></script>
     <script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/page-settings.js') }}"></script>
     <script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/flash-message.js') }}"></script>
+    <script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/text-editing-fix.js') }}"></script>
     <script src="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/animation-tools.js') }}"></script>
 @endsection
