@@ -1,0 +1,16 @@
+.r4v4-menu-typography input[type="color"] {
+    min-height: 42px !important;
+    padding: 4px !important;
+    cursor: pointer;
+}
+
+.r4v4-menu-typography .r4v4-page-card-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.r4v4-menu-typography select,
+.r4v4-menu-typography input {
+    appearance: auto;
+}

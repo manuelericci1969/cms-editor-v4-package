@@ -1,0 +1,244 @@
+/* Editor V4 modular menu core */
+:root {
+    --r4v4-left-menu-width: 390px;
+}
+
+/* Override sidebar-compact.css loaded before this file. */
+.r4v4-workspace {
+    grid-template-columns: var(--r4v4-left-menu-width) minmax(0, 1fr) 0 !important;
+}
+
+.r4v4-sidebar-left {
+    width: var(--r4v4-left-menu-width) !important;
+    min-width: var(--r4v4-left-menu-width) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* Menu principale: niente scroll orizzontale, tutte le voci restano visibili. */
+.r4v4-left-tabs {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch;
+    gap: 0;
+    overflow: visible !important;
+    border-bottom: 1px solid #2a3039;
+}
+
+.r4v4-blocks-panel.has-style-selection .r4v4-left-tabs,
+.r4v4-blocks-panel.has-component-selected .r4v4-left-tabs {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.r4v4-left-tabs button {
+    flex: initial;
+    min-width: 0;
+    min-height: 38px;
+    padding: 9px 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-right: 1px solid #2a3039 !important;
+    border-bottom: 1px solid #2a3039 !important;
+}
+
+.r4v4-left-tabs button[data-r4v4-selection-tab="1"]::after {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-left: 5px;
+    border-radius: 999px;
+    background: #64748b;
+    vertical-align: middle;
+}
+
+.r4v4-blocks-panel.has-component-selected .r4v4-left-tabs button[data-r4v4-selection-tab="1"]::after {
+    background: #38bdf8;
+}
+
+.r4v4-left-tabs button.is-active {
+    background: #0f346d !important;
+    color: #fff !important;
+    border-bottom-color: #60a5fa !important;
+}
+
+.r4v4-left-tab-panel {
+    box-sizing: border-box;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-bottom: 72px;
+}
+
+.r4v4-sidebar-left .r4v4-page-card {
+    box-sizing: border-box;
+    padding: 12px !important;
+}
+
+.r4v4-sidebar-left .r4v4-page-card label,
+.r4v4-sidebar-left .r4v4-left-switch {
+    position: relative;
+    display: block !important;
+    width: 100%;
+    box-sizing: border-box;
+    clear: both;
+}
+
+.r4v4-sidebar-left .r4v4-left-switch {
+    display: flex !important;
+}
+
+.r4v4-sidebar-left .r4v4-page-card input[type="text"],
+.r4v4-sidebar-left .r4v4-page-card input[type="number"],
+.r4v4-sidebar-left .r4v4-page-card input[type="datetime-local"],
+.r4v4-sidebar-left .r4v4-page-card textarea,
+.r4v4-sidebar-left .r4v4-page-card select {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100%;
+    min-height: 34px;
+    box-sizing: border-box;
+    clear: both;
+    margin: 5px 0 0 !important;
+    line-height: 1.35 !important;
+}
+
+.r4v4-sidebar-left .r4v4-page-card textarea {
+    min-height: 76px;
+}
+
+.r4v4-sidebar-left .r4v4-page-card .r4v4-page-action {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Contextual help injected by menu/help.js */
+.r4v4-sidebar-left .r4v4-page-card,
+.r4v4-sidebar-left .r4v4-page-card label,
+.r4v4-sidebar-left .r4v4-field-label {
+    overflow: visible !important;
+}
+
+.r4v4-field-label {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    line-height: 1.25;
+}
+
+.r4v4-left-switch .r4v4-field-label {
+    justify-content: flex-start;
+    gap: 6px;
+}
+
+.r4v4-help {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, .75);
+    background: #f8fafc;
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    cursor: help;
+    padding: 0;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+.r4v4-help:hover,
+.r4v4-help:focus {
+    outline: none;
+    border-color: #93c5fd;
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.r4v4-help.is-open {
+    outline: none;
+    border-color: #60a5fa;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.r4v4-help.is-open::after {
+    content: attr(data-r4-help);
+    position: absolute;
+    right: 0;
+    left: auto;
+    bottom: calc(100% + 9px);
+    width: max-content;
+    max-width: min(300px, calc(var(--r4v4-left-menu-width) - 38px));
+    white-space: normal;
+    background: #111827;
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: left;
+    z-index: 99999;
+    box-shadow: 0 14px 35px rgba(15, 23, 42, .32);
+    pointer-events: none;
+}
+
+.r4v4-help.is-open::before {
+    content: "";
+    position: absolute;
+    right: 6px;
+    left: auto;
+    bottom: calc(100% + 3px);
+    border: 6px solid transparent;
+    border-top-color: #111827;
+    z-index: 100000;
+}
+
+.r4v4-left-tabs button.r4v4-has-help,
+.r4v4-page-action.r4v4-has-help {
+    position: relative;
+}
+
+.r4v4-left-tabs button.r4v4-has-help::before,
+.r4v4-page-action.r4v4-has-help::before {
+    content: "?";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+    border-radius: 999px;
+    background: rgba(96, 165, 250, .18);
+    color: #bfdbfe;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.r4v4-menu-module-placeholder {
+    padding: 10px;
+    color: #9da7b5;
+    font-size: 10px;
+    line-height: 1.35;
+    font-weight: 700;
+}
+
+@media (max-width: 1280px) {
+    :root {
+        --r4v4-left-menu-width: 360px;
+    }
+
+    .r4v4-left-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}

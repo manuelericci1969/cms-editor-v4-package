@@ -1,0 +1,120 @@
+/* Editor V4 right sidebar page settings */
+
+.r4-right-page-settings-panel {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 88px);
+}
+
+.r4-right-page-title {
+    flex: 0 0 auto;
+}
+
+.r4-right-page-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    padding: 8px;
+    background: #f8fafc;
+}
+
+.r4-right-page-section {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid var(--r4v4-border);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.r4-right-page-section h4 {
+    margin: 0 0 10px;
+    color: var(--r4v4-text);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.r4-right-page-section label {
+    display: block;
+    margin-bottom: 9px;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.r4-right-page-section input[type="text"],
+.r4-right-page-section input[type="number"],
+.r4-right-page-section input[type="datetime-local"],
+.r4-right-page-section textarea,
+.r4-right-page-section select {
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px 9px;
+    border: 1px solid var(--r4v4-border);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--r4v4-text);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.r4-right-page-section textarea {
+    resize: vertical;
+}
+
+.r4-right-switch {
+    display: flex !important;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 8px !important;
+    padding: 5px 0;
+}
+
+.r4-right-switch input {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+}
+
+.r4-right-switch span {
+    color: var(--r4v4-text);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.r4-right-page-footer {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+    padding: 8px;
+    border-top: 1px solid var(--r4v4-border);
+    background: #fff;
+}
+
+.r4-right-page-status {
+    min-width: 0;
+    flex: 1 1 auto;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.r4-right-page-status.is-ok {
+    color: #047857;
+}
+
+.r4-right-page-status.is-error {
+    color: #b91c1c;
+}
+
+.r4-right-page-settings-panel.is-highlighted {
+    outline: 2px solid var(--r4v4-primary);
+    outline-offset: -2px;
+}
+
+.r4v4-sidebar-right .r4v4-panel:not(.r4-right-page-settings-panel) {
+    max-height: none;
+}

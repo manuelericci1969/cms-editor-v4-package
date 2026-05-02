@@ -1,0 +1,119 @@
+.r4v4-menu-spacing .r4v4-left-panel-hint,
+.r4v4-custom-help {
+    margin: 0 0 12px;
+    color: #9da7b5;
+    font-size: 11px;
+    line-height: 1.45;
+    font-style: italic;
+}
+
+.r4v4-unit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: #d7dce5;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.r4v4-unit-row select {
+    width: 84px !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+}
+
+.r4v4-spacing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.r4v4-spacing-grid label,
+.r4v4-form-list label {
+    display: flex !important;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0 !important;
+    color: #cbd5e1 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+}
+
+.r4v4-spacing-grid label span,
+.r4v4-form-list label span {
+    display: block;
+    color: #cbd5e1;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.r4v4-spacing-grid input,
+.r4v4-form-list input,
+.r4v4-form-list select,
+.r4v4-form-list textarea {
+    width: 100% !important;
+    min-height: 38px !important;
+    margin: 0 !important;
+    padding: 8px 10px !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    background: #111827 !important;
+    color: #f8fafc !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    box-sizing: border-box;
+}
+
+.r4v4-form-list {
+    display: grid;
+    gap: 12px;
+}
+
+.r4v4-control-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.r4v4-control-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.r4v4-control-actions button,
+.r4v4-segmented button {
+    min-height: 36px;
+    padding: 8px 10px;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    background: #1f2937;
+    color: #e5e7eb;
+    font-size: 11px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.r4v4-control-actions button:hover,
+.r4v4-segmented button:hover,
+.r4v4-segmented button.is-active {
+    border-color: #60a5fa;
+    background: #1d4ed8;
+    color: #fff;
+}
+
+.r4v4-segmented {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+}
+
+@media (min-width: 1440px) {
+    .r4v4-spacing-grid,
+    .r4v4-segmented,
+    .r4v4-control-actions-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}

@@ -1,0 +1,441 @@
+/* Editor V4 - GrapesJS Style Manager layout fixes
+   Global compact/dark layout for Stile > Style Manager.
+   Goal: no overlapping labels, usable inputs, visible color controls. */
+
+.r4v4-left-style-panel,
+.r4v4-left-style-panel * {
+    box-sizing: border-box !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-sector {
+    margin: 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid #313c4d !important;
+    background: #202733 !important;
+    overflow: visible !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-sector-title,
+.r4v4-left-style-panel .gjs-sm-title {
+    min-height: 34px !important;
+    padding: 10px 10px !important;
+    line-height: 1.2 !important;
+    background: #1a2130 !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid #313c4d !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    letter-spacing: .05em !important;
+    text-transform: uppercase !important;
+}
+
+/* Main properties list: one column. The sidebar is narrow; two columns make controls unusable. */
+.r4v4-left-style-panel .gjs-sm-sector > .gjs-sm-properties {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 10px 8px 14px !important;
+    background: #202733 !important;
+    overflow: visible !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-property {
+    float: none !important;
+    clear: both !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: 0 !important;
+}
+
+/* Labels */
+.r4v4-left-style-panel .gjs-sm-label,
+.r4v4-left-style-panel .gjs-sm-property__label,
+.r4v4-left-style-panel .gjs-sm-property__label span,
+.r4v4-left-style-panel .gjs-sm-sector-label {
+    float: none !important;
+    display: block !important;
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 13px !important;
+    margin: 0 !important;
+    padding: 0 18px 0 0 !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    text-overflow: clip !important;
+    line-height: 1.25 !important;
+    color: #c7d0de !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-clear,
+.r4v4-left-style-panel .gjs-sm-property .gjs-sm-clear {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    z-index: 4 !important;
+    width: 15px !important;
+    height: 15px !important;
+    min-width: 15px !important;
+    min-height: 15px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #9fb0c4 !important;
+    font-size: 14px !important;
+    line-height: 15px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-clear:hover {
+    color: #ffffff !important;
+}
+
+/* Field wrappers */
+.r4v4-left-style-panel .gjs-sm-field,
+.r4v4-left-style-panel .gjs-field,
+.r4v4-left-style-panel .gjs-input-holder {
+    float: none !important;
+    display: flex !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: #171d28 !important;
+    border: 1px solid #344155 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.r4v4-left-style-panel input,
+.r4v4-left-style-panel select,
+.r4v4-left-style-panel textarea,
+.r4v4-left-style-panel .gjs-field input,
+.r4v4-left-style-panel .gjs-field select,
+.r4v4-left-style-panel .gjs-field textarea,
+.r4v4-left-style-panel .gjs-input-holder input,
+.r4v4-left-style-panel .gjs-input-holder select,
+.r4v4-left-style-panel .gjs-input-holder textarea {
+    flex: 1 1 auto !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    margin: 0 !important;
+    padding: 0 7px !important;
+    line-height: 28px !important;
+    background: transparent !important;
+    border: 0 !important;
+    outline: none !important;
+    color: #f3f6fb !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+}
+
+.r4v4-left-style-panel select {
+    appearance: auto !important;
+    -webkit-appearance: menulist !important;
+}
+
+.r4v4-left-style-panel textarea {
+    height: 58px !important;
+    min-height: 58px !important;
+    padding-top: 7px !important;
+    line-height: 1.35 !important;
+    resize: vertical !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-field:has(textarea),
+.r4v4-left-style-panel .gjs-field:has(textarea),
+.r4v4-left-style-panel .gjs-input-holder:has(textarea) {
+    height: 60px !important;
+    min-height: 60px !important;
+}
+
+.r4v4-left-style-panel input::placeholder,
+.r4v4-left-style-panel textarea::placeholder {
+    color: #8392a7 !important;
+}
+
+.r4v4-left-style-panel input:focus,
+.r4v4-left-style-panel select:focus,
+.r4v4-left-style-panel textarea:focus,
+.r4v4-left-style-panel .gjs-field:focus-within,
+.r4v4-left-style-panel .gjs-sm-field:focus-within {
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 1px rgba(13, 110, 253, .38) !important;
+}
+
+/* Units and number arrows */
+.r4v4-left-style-panel .gjs-field-units,
+.r4v4-left-style-panel .gjs-field-unit,
+.r4v4-left-style-panel .gjs-sm-unit {
+    flex: 0 0 42px !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 28px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-left: 1px solid #344155 !important;
+    background: #202733 !important;
+    color: #ffffff !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    line-height: 28px !important;
+    text-align: center !important;
+}
+
+.r4v4-left-style-panel .gjs-field-arrows,
+.r4v4-left-style-panel .gjs-field-arrow-u,
+.r4v4-left-style-panel .gjs-field-arrow-d {
+    flex: 0 0 12px !important;
+    width: 12px !important;
+    min-width: 12px !important;
+    margin: 0 !important;
+    border-left: 1px solid #344155 !important;
+    background: #243044 !important;
+    color: #ffffff !important;
+}
+
+/* Composite fields: clean nested layout. */
+.r4v4-left-style-panel .gjs-sm-property .gjs-sm-properties,
+.r4v4-left-style-panel .gjs-sm-composite .gjs-sm-properties,
+.r4v4-left-style-panel .gjs-sm-stack .gjs-sm-properties {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 8px !important;
+    background: #1c2532 !important;
+    border: 1px solid #344155 !important;
+    overflow: visible !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-property .gjs-sm-properties .gjs-sm-property,
+.r4v4-left-style-panel .gjs-sm-composite .gjs-sm-properties .gjs-sm-property,
+.r4v4-left-style-panel .gjs-sm-stack .gjs-sm-properties .gjs-sm-property {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    gap: 4px !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-property .gjs-sm-properties .gjs-sm-property[data-sm-property="color"],
+.r4v4-left-style-panel .gjs-sm-property .gjs-sm-properties .gjs-sm-property[data-sm-property="border-color"],
+.r4v4-left-style-panel .gjs-sm-property .gjs-sm-properties .gjs-sm-property[data-sm-property="box-shadow-color"] {
+    grid-column: 1 / -1 !important;
+}
+
+/* Spacing composites need legible child labels. */
+.r4v4-left-style-panel .gjs-sm-property[data-sm-property="margin"] .gjs-sm-properties,
+.r4v4-left-style-panel .gjs-sm-property[data-sm-property="padding"] .gjs-sm-properties,
+.r4v4-left-style-panel .gjs-sm-property[data-sm-property="border-radius"] .gjs-sm-properties {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+/* On very narrow panels, force composites to one column. */
+@media (max-width: 1180px) {
+    .r4v4-left-style-panel .gjs-sm-property .gjs-sm-properties,
+    .r4v4-left-style-panel .gjs-sm-composite .gjs-sm-properties,
+    .r4v4-left-style-panel .gjs-sm-stack .gjs-sm-properties {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Radio fields, for example text-align. */
+.r4v4-left-style-panel .gjs-sm-radio,
+.r4v4-left-style-panel .gjs-radio-items,
+.r4v4-left-style-panel .gjs-sm-field.gjs-sm-radio {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 32px !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+    background: #171d28 !important;
+    border: 1px solid #344155 !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-radio-item,
+.r4v4-left-style-panel .gjs-radio-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+    min-height: 30px !important;
+    padding: 0 4px !important;
+    border-right: 1px solid #344155 !important;
+    color: #c7d0de !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-radio-item:last-child,
+.r4v4-left-style-panel .gjs-radio-item:last-child {
+    border-right: 0 !important;
+}
+
+.r4v4-left-style-panel .gjs-sm-radio-item.gjs-sm-active,
+.r4v4-left-style-panel .gjs-radio-item.gjs-radio-item-checked,
+.r4v4-left-style-panel .gjs-radio-item.gjs-active {
+    background: #0d3470 !important;
+    color: #ffffff !important;
+}
+
+/* Color controls: text value + native color swatch remain clickable. */
+.r4v4-left-style-panel .gjs-field-color,
+.r4v4-left-style-panel .gjs-sm-field.gjs-sm-color,
+.r4v4-left-style-panel .gjs-sm-color {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    overflow: visible !important;
+}
+
+.r4v4-left-style-panel .gjs-field-color input[type="text"],
+.r4v4-left-style-panel .gjs-sm-field.gjs-sm-color input[type="text"] {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    height: 30px !important;
+    line-height: 30px !important;
+}
+
+.r4v4-left-style-panel input[type="color"] {
+    flex: 0 0 34px !important;
+    display: block !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    margin: 0 !important;
+    padding: 2px !important;
+    border: 0 !important;
+    border-left: 1px solid #344155 !important;
+    border-radius: 0 !important;
+    background: #243044 !important;
+    color: initial !important;
+    cursor: pointer !important;
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    pointer-events: auto !important;
+}
+
+.r4v4-left-style-panel input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0 !important;
+}
+
+.r4v4-left-style-panel input[type="color"]::-webkit-color-swatch {
+    border: 1px solid #6d7f99 !important;
+    border-radius: 0 !important;
+}
+
+.r4v4-left-style-panel input[type="color"]::-moz-color-swatch {
+    border: 1px solid #6d7f99 !important;
+    border-radius: 0 !important;
+}
+
+.r4v4-left-style-panel .gjs-field-colorp,
+.r4v4-left-style-panel .gjs-field-colorp-c,
+.r4v4-left-style-panel .gjs-sm-colorp,
+.r4v4-left-style-panel .gjs-sm-colorp-c,
+.r4v4-left-style-panel .gjs-four-color {
+    flex: 0 0 34px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-left: 1px solid #344155 !important;
+    border-radius: 0 !important;
+    cursor: pointer !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.18) !important;
+    pointer-events: auto !important;
+}
+
+.r4v4-left-style-panel .gjs-field-colorp:hover,
+.r4v4-left-style-panel .gjs-sm-colorp:hover,
+.r4v4-left-style-panel .gjs-four-color:hover {
+    box-shadow: inset 0 0 0 1px #8dbbff !important;
+}
+
+/* Spectrum / GrapesJS popup palette, when available. */
+.sp-container,
+.sp-palette-container,
+.sp-picker-container,
+.gjs-color-warn,
+.gjs-mdl-container,
+.gjs-mdl-dialog {
+    z-index: 999999 !important;
+}
+
+.sp-container,
+.sp-palette-container,
+.sp-picker-container {
+    background: #202733 !important;
+    border-color: #344155 !important;
+    color: #f3f6fb !important;
+}
+
+.sp-container button,
+.sp-container .sp-choose,
+.sp-container .sp-cancel {
+    border-radius: 0 !important;
+}
+
+/* Asset buttons inside fields, for example background image. */
+.r4v4-left-style-panel .gjs-sm-property[data-sm-property="background-image"] button,
+.r4v4-left-style-panel .gjs-sm-property[data-sm-property="background-image"] .gjs-btn-prim,
+.r4v4-left-style-panel .gjs-sm-property[data-sm-property="background-image"] .gjs-sm-btn {
+    width: 100% !important;
+    min-height: 32px !important;
+    padding: 0 8px !important;
+    border: 1px solid #344155 !important;
+    background: #243044 !important;
+    color: #ffffff !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+}
+
+.r4v4-left-style-panel option {
+    background: #171d28 !important;
+    color: #f3f6fb !important;
+}
