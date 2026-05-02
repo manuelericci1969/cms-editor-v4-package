@@ -37,12 +37,23 @@
         return instance && instance.getSelected ? instance.getSelected() : null;
     }
 
+    function hasClass(component, className) {
+        if (!component) return false;
+        const attrs = component.getAttributes ? component.getAttributes() : {};
+        const classAttr = String(attrs.class || '');
+        if (classAttr.split(/\s+/).includes(className)) return true;
+        if (typeof component.getClasses === 'function') {
+            return (component.getClasses() || []).includes(className);
+        }
+        return false;
+    }
+
     function componentKind(component) {
         if (!component) return '';
         const type = component.get ? component.get('type') : '';
         const attrs = component.getAttributes ? component.getAttributes() : {};
-        if (type === 'r4-section-grid' || attrs['data-r4-component'] === 'section-grid') return 'section';
-        if (type === 'r4-section-column' || attrs['data-r4-component'] === 'section-column') return 'column';
+        if (type === 'r4-section-grid' || attrs['data-r4-component'] === 'section-grid' || hasClass(component, 'r4v4-section-grid')) return 'section';
+        if (type === 'r4-section-column' || attrs['data-r4-component'] === 'section-column' || hasClass(component, 'r4v4-section-column')) return 'column';
         return '';
     }
 
@@ -217,7 +228,8 @@
         panel.querySelector('[data-r4-section-grid-select-parent]')?.addEventListener('click', function () {
             const component = selected();
             if (componentKind(component) !== 'column') return;
-            const section = component.closest('[data-r4-component="section-grid"]');
+            let section = component.closest('[data-r4-component="section-grid"]');
+            if (!section && typeof component.closest === 'function') section = component.closest('.r4v4-section-grid');
             const instance = editor();
             if (section && instance && instance.select) instance.select(section);
         });
