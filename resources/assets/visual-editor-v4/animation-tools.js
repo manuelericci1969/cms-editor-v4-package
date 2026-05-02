@@ -51,6 +51,24 @@
         component.setAttributes(attrs);
     }
 
+    function loadSectionGridPanelFallback() {
+        if (window.__r4SectionGridPanelFallbackLoaded) return;
+        if (document.getElementById('r4v4SectionGridPanel')) return;
+        if (document.querySelector('script[data-r4-section-grid-panel-fallback="1"]')) return;
+
+        const current = document.currentScript;
+        const src = current && current.src
+            ? current.src.replace(/animation-tools\.js(?:\?.*)?$/, 'section-grid-panel.js')
+            : '/vendor/cms-editor-v4/section-grid-panel.js';
+
+        const script = document.createElement('script');
+        script.src = src;
+        script.defer = true;
+        script.dataset.r4SectionGridPanelFallback = '1';
+        script.onload = function () { window.__r4SectionGridPanelFallbackLoaded = true; };
+        document.body.appendChild(script);
+    }
+
     function findPanelTarget() {
         return document.getElementById('r4v4AnimationPanelHost') ||
             document.getElementById('r4v4-traits') ||
@@ -211,6 +229,8 @@
     }
 
     function boot() {
+        loadSectionGridPanelFallback();
+
         if (!createPanel()) return false;
 
         const editor = getEditor();
@@ -229,6 +249,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+        loadSectionGridPanelFallback();
         let attempts = 0;
         const timer = window.setInterval(function () {
             attempts++;
