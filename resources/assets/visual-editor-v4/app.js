@@ -247,7 +247,7 @@
 
         const insertComponent = (html) => {
             editor.addComponents(html);
-            syncFields();
+            syncFields({ force: true });
             closeMedia();
         };
 
@@ -340,15 +340,53 @@
             if (cssField && cssField.value) editor.setStyle(cssField.value);
         }
 
-        function syncFields() {
+        function isTextEditing() {
+            const doc = editor.Canvas && editor.Canvas.getDocument && editor.Canvas.getDocument();
+            if (!doc || !doc.activeElement) return false;
+
+            const active = doc.activeElement;
+
+            return !!(
+                active &&
+                (
+                    active.isContentEditable ||
+                    active.closest?.('[contenteditable="true"]') ||
+                    active.closest?.('.gjs-rte-toolbar') ||
+                    active.closest?.('.gjs-rte-actionbar')
+                )
+            );
+        }
+
+        function syncFields(options) {
+            const force = options && options.force === true;
+
+            if (!force && isTextEditing()) {
+                return;
+            }
+
             if (htmlField) htmlField.value = editor.getHtml();
             if (cssField) cssField.value = editor.getCss();
             if (jsonField) jsonField.value = JSON.stringify(editor.getProjectData());
         }
 
-        const mediaLibrary = initMediaLibrary(editor, syncFields);
+        let syncFieldsTimer = null;
 
-        editor.on('update', syncFields);
+        function scheduleSyncFields() {
+            if (syncFieldsTimer) {
+                window.clearTimeout(syncFieldsTimer);
+            }
+
+            syncFieldsTimer = window.setTimeout(function () {
+                syncFields();
+            }, 500);
+        }
+
+        const mediaLibrary = initMediaLibrary(editor, function () {
+            syncFields({ force: true });
+        });
+
+        editor.on('component:add component:remove component:styleUpdate component:update:attributes', scheduleSyncFields);
+        editor.on('storage:start', function () { syncFields({ force: true }); });
 
         document.querySelectorAll('[data-r4v4-device]').forEach((btn) => {
             btn.addEventListener('click', function () {
@@ -370,7 +408,7 @@
                     editor.DomComponents.clear();
                     editor.CssComposer.clear();
                     editor.setComponents(buildStarterContent());
-                    syncFields();
+                    syncFields({ force: true });
                 }
             });
         });
@@ -378,13 +416,13 @@
         document.querySelectorAll('[data-r4v4-submit-status]').forEach((btn) => {
             btn.addEventListener('click', function () {
                 if (statusField) statusField.value = btn.getAttribute('data-r4v4-submit-status') || 'draft';
-                syncFields();
+                syncFields({ force: true });
             });
         });
 
-        if (form) form.addEventListener('submit', syncFields);
+        if (form) form.addEventListener('submit', function () { syncFields({ force: true }); });
 
         setActiveDeviceButton('Desktop');
-        setTimeout(syncFields, 300);
+        setTimeout(function () { syncFields({ force: true }); }, 300);
     });
 })();
