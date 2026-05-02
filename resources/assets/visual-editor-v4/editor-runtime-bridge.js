@@ -41,12 +41,23 @@
             (
                 active.isContentEditable ||
                 active.closest?.('[contenteditable="true"]') ||
+                active.closest?.('.gjs-rte-toolbar') ||
+                active.closest?.('.gjs-rte-actionbar') ||
                 active.closest?.('.gjs-selected[contenteditable="true"]')
             )
         );
     }
 
-    function injectRuntime(editor) {
+    function removePublicRuntime(doc) {
+        if (!doc) return;
+
+        const runtimeJs = doc.getElementById('r4v4-runtime-js');
+        if (runtimeJs && runtimeJs.parentNode) {
+            runtimeJs.parentNode.removeChild(runtimeJs);
+        }
+    }
+
+    function injectEditorPreview(editor) {
         if (!editor || !editor.Canvas) return false;
 
         if (isTextEditing(editor)) {
@@ -60,6 +71,7 @@
 
         body.classList.add('page-visual-content');
         normalizeLegacyAnimations(body);
+        removePublicRuntime(doc);
 
         if (!doc.getElementById('r4v4-runtime-css')) {
             const link = doc.createElement('link');
@@ -69,33 +81,19 @@
             doc.head.appendChild(link);
         }
 
-        if (!doc.getElementById('r4v4-runtime-js')) {
-            const script = doc.createElement('script');
-            script.id = 'r4v4-runtime-js';
-            script.src = '/assets/page-builder/v4/runtime.js?v=' + Date.now();
-            script.defer = true;
-            script.onload = function () {
-                if (doc.defaultView && doc.defaultView.R4V4Runtime && typeof doc.defaultView.R4V4Runtime.boot === 'function') {
-                    doc.defaultView.R4V4Runtime.boot();
-                }
-            };
-            doc.body.appendChild(script);
-        } else if (doc.defaultView && doc.defaultView.R4V4Runtime && typeof doc.defaultView.R4V4Runtime.boot === 'function') {
-            doc.defaultView.R4V4Runtime.boot();
-        }
-
         if (!doc.getElementById('r4v4-editor-preview-fixes')) {
             const style = doc.createElement('style');
             style.id = 'r4v4-editor-preview-fixes';
             style.textContent = [
                 'html,body{min-height:100%;overflow:auto!important;}',
                 '.page-visual-content{min-height:100%;}',
+                'body.gjs-dashed,body.gjs-dashed *{user-select:auto!important;-webkit-user-select:auto!important;}',
+                'body.gjs-dashed p,body.gjs-dashed span,body.gjs-dashed a,body.gjs-dashed li,body.gjs-dashed h1,body.gjs-dashed h2,body.gjs-dashed h3,body.gjs-dashed h4,body.gjs-dashed h5,body.gjs-dashed h6{user-select:text!important;-webkit-user-select:text!important;}',
                 '.r4v4-advanced-slider,.r4v4-fullscreen-slider{outline:1px dashed rgba(13,110,253,.25);}',
                 '.r4v4-fullscreen-slider{min-height:760px!important;}',
                 '.r4v4-fullscreen-slider__viewport{min-height:760px!important;}',
                 '.r4v4-fullscreen-slider__content{min-height:760px!important;}',
-                '.r4v4-slider-arrow,.r4v4-slider-dot{pointer-events:none;}',
-                '[data-r4-animation]::after,[data-anim]::after{content:"Animazione";display:inline-block;margin-left:8px;padding:3px 7px;border-radius:999px;background:#eaf3ff;color:#0d6efd;font-size:11px;font-weight:800;vertical-align:middle;}'
+                '.r4v4-slider-arrow,.r4v4-slider-dot{pointer-events:none!important;}'
             ].join('\n');
             doc.head.appendChild(style);
         }
@@ -109,11 +107,11 @@
         const editor = window.r4VisualEditorV4Instance;
         if (!editor) return false;
 
-        injectRuntime(editor);
-        editor.on('load', function () { injectRuntime(editor); });
-        editor.on('component:add', function () { window.setTimeout(function () { injectRuntime(editor); }, 50); });
-        // Evitare injectRuntime su component:update: durante l'editing testo può resettare il caret/cursore.
-        editor.on('component:selected', function () { window.setTimeout(function () { injectRuntime(editor); }, 50); });
+        injectEditorPreview(editor);
+        editor.on('load', function () { injectEditorPreview(editor); });
+        editor.on('component:add', function () { window.setTimeout(function () { injectEditorPreview(editor); }, 50); });
+        editor.on('component:selected', function () { window.setTimeout(function () { injectEditorPreview(editor); }, 50); });
+        editor.on('rte:enable', function () { removePublicRuntime(editor.Canvas.getDocument && editor.Canvas.getDocument()); });
 
         return true;
     }
