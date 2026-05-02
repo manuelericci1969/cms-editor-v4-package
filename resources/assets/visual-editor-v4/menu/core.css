@@ -233,6 +233,55 @@
     font-weight: 700;
 }
 
+/* High-contrast cards for blocks/widgets/elements in the left menu.
+   These override previous muted/opacity rules that made labels unreadable on light cards. */
+.r4v4-sidebar-left .gjs-block,
+.r4v4-sidebar-left .gjs-block:hover,
+.r4v4-sidebar-left .r4v4-block-card,
+.r4v4-sidebar-left .r4v4-widget-card,
+.r4v4-sidebar-left .r4v4-element-card,
+.r4v4-sidebar-left [class*="block-card"],
+.r4v4-sidebar-left [class*="widget-card"],
+.r4v4-sidebar-left [class*="element-card"] {
+    color: #111827 !important;
+    opacity: 1 !important;
+}
+
+.r4v4-sidebar-left .gjs-block-label,
+.r4v4-sidebar-left .gjs-block__label,
+.r4v4-sidebar-left .gjs-block-title,
+.r4v4-sidebar-left .gjs-title,
+.r4v4-sidebar-left .r4v4-block-card,
+.r4v4-sidebar-left .r4v4-block-card *,
+.r4v4-sidebar-left .r4v4-widget-card,
+.r4v4-sidebar-left .r4v4-widget-card *,
+.r4v4-sidebar-left .r4v4-element-card,
+.r4v4-sidebar-left .r4v4-element-card *,
+.r4v4-sidebar-left [class*="block-card"] *,
+.r4v4-sidebar-left [class*="widget-card"] *,
+.r4v4-sidebar-left [class*="element-card"] * {
+    color: #111827 !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+.r4v4-sidebar-left .gjs-block small,
+.r4v4-sidebar-left .gjs-block .text-muted,
+.r4v4-sidebar-left .r4v4-card-description,
+.r4v4-sidebar-left [class*="block-card"] small,
+.r4v4-sidebar-left [class*="widget-card"] small,
+.r4v4-sidebar-left [class*="element-card"] small {
+    color: #475569 !important;
+    opacity: 1 !important;
+}
+
+.r4v4-sidebar-left .gjs-block .r4v4-block-icon,
+.r4v4-sidebar-left .r4v4-block-icon {
+    color: #ffffff !important;
+    background: #1e3a5f !important;
+    opacity: 1 !important;
+}
+
 @media (max-width: 1280px) {
     :root {
         --r4v4-left-menu-width: 360px;
