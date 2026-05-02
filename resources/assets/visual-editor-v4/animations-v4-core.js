@@ -22,6 +22,26 @@
         return Math.max(min, parsed);
     }
 
+    function isTextEditing() {
+        const e = editor();
+        if (!e || !e.Canvas || !e.Canvas.getDocument) return false;
+
+        const doc = e.Canvas.getDocument();
+        if (!doc || !doc.activeElement) return false;
+
+        const active = doc.activeElement;
+
+        return !!(
+            active &&
+            (
+                active.isContentEditable ||
+                active.closest?.('[contenteditable="true"]') ||
+                active.closest?.('.gjs-rte-toolbar') ||
+                active.closest?.('.gjs-rte-actionbar')
+            )
+        );
+    }
+
     function getValues(component, override) {
         const attrs = getAttrs(component);
         return Object.assign({
@@ -64,7 +84,11 @@
         el.style.setProperty('--r4-animation-distance', distance + 'px');
     }
 
-    function syncFields() {
+    function syncFields(options) {
+        if (!(options && options.force === true) && isTextEditing()) {
+            return;
+        }
+
         const e = editor();
         const cfg = window.R4VisualEditorV4 || {};
         if (!e) return;
@@ -80,6 +104,13 @@
         } catch (error) {
             console.warn('[R4V4 Animations] sync failed', error);
         }
+    }
+
+    function scheduleSyncFields() {
+        window.clearTimeout(window.__r4v4AnimationSyncTimer);
+        window.__r4v4AnimationSyncTimer = window.setTimeout(function () {
+            syncFields();
+        }, 350);
     }
 
     function cleanVisualHtml(html) {
@@ -111,7 +142,7 @@
             e.trigger('component:update', c);
             e.trigger('update');
         }
-        syncFields();
+        syncFields({ force: true });
     }
 
     function clear(component) {
@@ -140,7 +171,7 @@
             e.trigger('component:update', c);
             e.trigger('update');
         }
-        syncFields();
+        syncFields({ force: true });
     }
 
     function px(value) {
@@ -250,7 +281,6 @@
             return;
         }
 
-        // Fallback minimo se Web Animations API non è disponibile.
         const first = frames[0] || {};
         const last = frames[frames.length - 1] || {};
         Object.keys(first).forEach(function (key) { el.style[key] = first[key]; });
@@ -273,7 +303,7 @@
         const form = cfg.formId ? document.getElementById(cfg.formId) : null;
         if (!form || form.dataset.r4V4AnimationCoreBound === '1') return;
         form.dataset.r4V4AnimationCoreBound = '1';
-        form.addEventListener('submit', syncFields, true);
+        form.addEventListener('submit', function () { syncFields({ force: true }); }, true);
     }
 
     function boot() {
@@ -286,14 +316,16 @@
             applyCssVars(component, getValues(component));
         });
         e.on('component:update', function (component) {
+            if (isTextEditing()) return;
             applyCssVars(component, getValues(component));
-            syncFields();
+            scheduleSyncFields();
         });
-        e.on('component:add', function () { window.setTimeout(syncFields, 80); });
-        e.on('component:remove', function () { window.setTimeout(syncFields, 80); });
+        e.on('component:add', function () { window.setTimeout(scheduleSyncFields, 80); });
+        e.on('component:remove', function () { window.setTimeout(scheduleSyncFields, 80); });
+        e.on('rte:disable', function () { syncFields({ force: true }); });
 
         bindFormSync();
-        syncFields();
+        syncFields({ force: true });
         return true;
     }
 
@@ -303,7 +335,7 @@
         preview: preview,
         selected: selected,
         getValues: function () { return getValues(selected()); },
-        syncFields: syncFields,
+        syncFields: function () { syncFields({ force: true }); },
         cleanVisualHtml: cleanVisualHtml
     };
 
