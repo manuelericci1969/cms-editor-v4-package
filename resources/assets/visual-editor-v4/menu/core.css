@@ -1,6 +1,7 @@
 /* Editor V4 modular menu core */
 :root {
     --r4v4-left-menu-width: 390px;
+    --r4v4-left-menu-gutter: 8px;
 }
 
 /* Override sidebar-compact.css loaded before this file. */
@@ -13,6 +14,14 @@
     min-width: var(--r4v4-left-menu-width) !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
+    box-sizing: border-box !important;
+    padding-left: var(--r4v4-left-menu-gutter) !important;
+    padding-right: var(--r4v4-left-menu-gutter) !important;
+}
+
+.r4v4-sidebar-left > * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 /* Uniforma i pannelli laterali al tema dark: IMMAGINI, EDITOR, blocchi e sezioni. */
@@ -348,6 +357,7 @@
 @media (max-width: 1280px) {
     :root {
         --r4v4-left-menu-width: 360px;
+        --r4v4-left-menu-gutter: 8px;
     }
 
     .r4v4-left-tabs {
