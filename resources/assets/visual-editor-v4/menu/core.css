@@ -233,8 +233,7 @@
     font-weight: 700;
 }
 
-/* High-contrast cards for blocks/widgets/elements in the left menu.
-   These override previous muted/opacity rules that made labels unreadable on light cards. */
+/* Dark theme cards for blocks/widgets/elements in the left menu. */
 .r4v4-sidebar-left .gjs-block,
 .r4v4-sidebar-left .gjs-block:hover,
 .r4v4-sidebar-left .r4v4-block-card,
@@ -243,8 +242,23 @@
 .r4v4-sidebar-left [class*="block-card"],
 .r4v4-sidebar-left [class*="widget-card"],
 .r4v4-sidebar-left [class*="element-card"] {
-    color: #111827 !important;
+    background: linear-gradient(180deg, #1f2937 0%, #111827 100%) !important;
+    color: #f8fafc !important;
+    border: 1px solid #334155 !important;
+    box-shadow: none !important;
     opacity: 1 !important;
+}
+
+.r4v4-sidebar-left .gjs-block:hover,
+.r4v4-sidebar-left .r4v4-block-card:hover,
+.r4v4-sidebar-left .r4v4-widget-card:hover,
+.r4v4-sidebar-left .r4v4-element-card:hover,
+.r4v4-sidebar-left [class*="block-card"]:hover,
+.r4v4-sidebar-left [class*="widget-card"]:hover,
+.r4v4-sidebar-left [class*="element-card"]:hover {
+    background: linear-gradient(180deg, #263447 0%, #172033 100%) !important;
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 0 1px rgba(96,165,250,.25) inset !important;
 }
 
 .r4v4-sidebar-left .gjs-block-label,
@@ -260,7 +274,7 @@
 .r4v4-sidebar-left [class*="block-card"] *,
 .r4v4-sidebar-left [class*="widget-card"] *,
 .r4v4-sidebar-left [class*="element-card"] * {
-    color: #111827 !important;
+    color: #f8fafc !important;
     opacity: 1 !important;
     text-shadow: none !important;
 }
@@ -271,14 +285,15 @@
 .r4v4-sidebar-left [class*="block-card"] small,
 .r4v4-sidebar-left [class*="widget-card"] small,
 .r4v4-sidebar-left [class*="element-card"] small {
-    color: #475569 !important;
+    color: #cbd5e1 !important;
     opacity: 1 !important;
 }
 
 .r4v4-sidebar-left .gjs-block .r4v4-block-icon,
 .r4v4-sidebar-left .r4v4-block-icon {
     color: #ffffff !important;
-    background: #1e3a5f !important;
+    background: #1e40af !important;
+    border: 1px solid rgba(147,197,253,.35) !important;
     opacity: 1 !important;
 }
 
