@@ -3,7 +3,7 @@
   "description": "Pacchetto privato Editor V4 per CMS R4Software",
   "type": "library",
   "license": "proprietary",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "autoload": {
     "psr-4": {
       "R4Software\\CmsEditorV4\\": "src/"
