@@ -15,6 +15,54 @@
     overflow-x: hidden !important;
 }
 
+/* Uniforma i pannelli laterali al tema dark: IMMAGINI, EDITOR, blocchi e sezioni. */
+.r4v4-sidebar-left .r4v4-panel,
+.r4v4-sidebar-right .r4v4-panel,
+.r4v4-sidebar-left .r4v4-blocks-panel,
+.r4v4-sidebar-left .r4v4-left-tab-panel,
+.r4v4-sidebar-left .r4v4-page-card {
+    background: #111820 !important;
+    color: #cbd5e1 !important;
+    border-color: #243244 !important;
+    box-shadow: none !important;
+}
+
+.r4v4-sidebar-left .r4v4-panel-title,
+.r4v4-sidebar-right .r4v4-panel-title,
+.r4v4-sidebar-left .r4v4-section-title,
+.r4v4-sidebar-left .r4v4-sidebar-section-title,
+.r4v4-sidebar-left .r4v4-menu-section-title,
+.r4v4-sidebar-left .r4v4-left-section-title,
+.r4v4-sidebar-left [class*="section-title"],
+.r4v4-sidebar-left [class*="panel-title"] {
+    background: #151e2b !important;
+    color: #e5edf8 !important;
+    border-top: 1px solid #243244 !important;
+    border-bottom: 1px solid #243244 !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+}
+
+.r4v4-sidebar-left .r4v4-panel-title *,
+.r4v4-sidebar-right .r4v4-panel-title *,
+.r4v4-sidebar-left [class*="section-title"] *,
+.r4v4-sidebar-left [class*="panel-title"] * {
+    color: #e5edf8 !important;
+    opacity: 1 !important;
+}
+
+/* Header chiari ereditati da vecchie regole: forzati in dark. */
+.r4v4-sidebar-left .r4v4-panel > header,
+.r4v4-sidebar-left .r4v4-panel > .header,
+.r4v4-sidebar-left .r4v4-panel > .card-header,
+.r4v4-sidebar-left .r4v4-page-card > header,
+.r4v4-sidebar-left .r4v4-page-card > .header,
+.r4v4-sidebar-left .r4v4-page-card > .card-header {
+    background: #151e2b !important;
+    color: #e5edf8 !important;
+    border-color: #243244 !important;
+}
+
 /* Menu principale: niente scroll orizzontale, tutte le voci restano visibili. */
 .r4v4-left-tabs {
     display: grid !important;
