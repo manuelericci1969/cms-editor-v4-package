@@ -181,7 +181,7 @@
     @include('cms-editor-v4::menu.effects.html')
     @include('cms-editor-v4::menu.advanced.html')
 
-    <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/grapesjs@0.22.5/dist/css/grapes.min.css">
     <link rel="stylesheet" href="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/editor.css') }}">
     <link rel="stylesheet" href="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/sidebar-compact.css') }}">
     <link rel="stylesheet" href="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/topbar-compact.css') }}">
@@ -192,7 +192,7 @@
     <link rel="stylesheet" href="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/menu/spacing.css') }}">
     <link rel="stylesheet" href="{{ asset(config('editor-v4.assets_path', 'vendor/cms-editor-v4') . '/menu/typography.css') }}">
 
-    <script src="https://unpkg.com/grapesjs"></script>
+    <script src="https://unpkg.com/grapesjs@0.22.5"></script>
     <script>
         window.R4VisualEditorV4 = {
             htmlFieldId: 'visual_html',
