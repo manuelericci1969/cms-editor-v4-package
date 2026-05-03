@@ -353,6 +353,28 @@
         };
     }
 
+    function innerGridStyle(component) {
+        return {
+            display: 'grid',
+            'grid-template-columns': 'repeat(var(--r4-section-columns-desktop, 3), minmax(0, 1fr))',
+            'column-gap': 'var(--r4-section-column-gap, 32px)',
+            'row-gap': 'var(--r4-section-row-gap, 32px)',
+            'align-items': 'stretch',
+            width: '100%',
+            'max-width': 'var(--r4-section-max-width, 1180px)',
+            'margin-left': 'auto',
+            'margin-right': 'auto'
+        };
+    }
+
+    function applyInnerGridStyle(component) {
+        if (!component || typeof component.find !== 'function') return;
+        const inner = component.find('.r4v4-section-grid-inner')[0];
+        if (inner && typeof inner.addStyle === 'function') {
+            inner.addStyle(innerGridStyle(component));
+        }
+    }
+
     function columnStyle(component) {
         return {
             '--r4-column-padding': px(component.get('r4ColumnPadding'), 28),
@@ -470,7 +492,10 @@
                     this.listenTo(this, 'change:r4ColumnsDesktop change:r4ColumnsTablet change:r4ColumnsMobile change:r4ColumnGap change:r4RowGap change:r4PaddingTop change:r4PaddingRight change:r4PaddingBottom change:r4PaddingLeft change:r4MarginTop change:r4MarginBottom change:r4MaxWidth change:r4MinHeight change:r4Background', this.applyR4SectionStyle);
                     this.applyR4SectionStyle();
                 },
-                applyR4SectionStyle() { this.addStyle(sectionStyle(this)); }
+                applyR4SectionStyle() {
+                    this.addStyle(sectionStyle(this));
+                    applyInnerGridStyle(this);
+                }
             }
         });
 
